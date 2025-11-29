@@ -144,3 +144,22 @@ Para detener la aplicación, presiona `Ctrl + C` en la terminal donde se está e
 ```bash
 docker-compose down
 ```
+## Instrucciones de Instalación para instalación en Windows
+
+1. **Clonar el Repositorio**:
+   ```bash
+   git clone https://github.com/YonyVilca/ormd2.1.git
+   cd ormd2.1   ```
+
+2. **Configurar Credenciales**:
+   > ⚠️ **IMPORTANTE**: El archivo de credenciales `ormd-476617-56cca3f6e4a6.json` **NO** está incluido en el repositorio por seguridad.
+   
+   - Obtén este archivo del administrador del proyecto (o descárgalo de la ubicación segura proporcionada).
+
+   https://drive.google.com/file/d/1VICPMv544btBi-9r3JGJ-A1lLbcYEw0H/view?usp=sharing
+
+   - Descomprime el archivo y coloca el archivo `ormd-476617-56cca3f6e4a6.json`en la carpeta dist
+
+3. **Ejecutar el instalador dist**
+   - Ejecuta el instalador main.exe que se encuentra en la carpeta dist
+   
