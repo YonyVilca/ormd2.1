@@ -119,7 +119,7 @@ Esta guía explica cómo empaquetar y ejecutar la aplicación ORMD utilizando Do
 
    https://drive.google.com/file/d/1VICPMv544btBi-9r3JGJ-A1lLbcYEw0H/view?usp=sharing
 
-   - Coloca el archivo `ormd-476617-56cca3f6e4a6.json` en la carpeta raíz del proyecto (donde está este `README.md`).
+   - Descomprime el archivo y coloca el archivo `ormd-476617-56cca3f6e4a6.json` en la carpeta raíz del proyecto (donde está este `README.md`).
 
 3. **Construir y Ejecutar**:
    Ejecuta el siguiente comando para construir la imagen y arrancar el contenedor:

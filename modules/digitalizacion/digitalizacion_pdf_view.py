@@ -1450,10 +1450,62 @@ def create_digitalizacion_pdf_view(
                 return 0
         return 0
 
+    def on_upload_result(e: ft.FilePickerUploadEvent) -> None:
+        nonlocal files
+        for f in files:
+            if f["name"] == e.file_name:
+                if e.error:
+                    f["status"] = "Error"
+                    log_add(f"❌ Error subiendo {e.file_name}: {e.error}")
+                elif e.progress == 1.0:
+                    f["status"] = "Pendiente"
+                    log_add(f"✅ Subido: {e.file_name}")
+                    # Verificar si existe en disco (Docker/Server)
+                    if not os.path.exists(f["path"]):
+                        # Intentar ruta absoluta si es necesario o esperar
+                        pass
+                refresh_table()
+                update_ocr_buttons()
+                break
+
     def on_pick(event: ft.FilePickerResultEvent) -> None:
         nonlocal files, selected_index
         if not event or not event.files:
             return
+
+        # Detección de modo WEB o falta de rutas locales
+        # Si estamos en Web, event.files[0].path suele ser None o una URL blob inútil para el backend
+        is_web = page.web or (event.files and not event.files[0].path)
+
+        if is_web:
+            # Modo WEB: Iniciamos subida
+            # Asegurar directorio de subida
+            os.makedirs("uploads", exist_ok=True)
+            
+            file_picker.upload(event.files)
+            
+            for entry in event.files:
+                # En modo web, asumimos que se guardará en "uploads/<nombre>"
+                # Flet usa el nombre del archivo original
+                target_path = os.path.abspath(os.path.join("uploads", entry.name))
+                
+                if any(it["path"] == target_path for it in files):
+                    continue
+
+                files.append({
+                    "name": entry.name,
+                    "path": target_path,
+                    "mime": "application/pdf",
+                    "size": getattr(entry, "size", 0),
+                    "status": "Procesando", # Usamos un estado temporal visual o "Procesando" (que muestra spinner)
+                    # O mejor, creamos un estado "Subiendo" si tuviéramos el icono, 
+                    # pero "Procesando" con spinner servirá para indicar actividad.
+                })
+            
+            refresh_table()
+            return
+
+        # Modo DESKTOP (comportamiento original)
         added = 0
         for entry in event.files:
             path = entry.path
@@ -1491,7 +1543,7 @@ def create_digitalizacion_pdf_view(
     def ensure_file_picker() -> ft.FilePicker:
         nonlocal file_picker
         if file_picker is None:
-            file_picker = ft.FilePicker(on_result=on_pick)
+            file_picker = ft.FilePicker(on_result=on_pick, on_upload=on_upload_result)
             try:
                 if file_picker not in page.overlay:
                     page.overlay.append(file_picker)

@@ -252,7 +252,7 @@ def main(page: ft.Page):
 if __name__ == "__main__":
     print("🔧 INICIANDO APLICACIÓN ORMD EN 1900x1020 PANTALLA COMPLETA...")
     try:
-        ft.app(target=main, view=ft.AppView.FLET_APP, port=0)
+        ft.app(target=main, view=ft.AppView.FLET_APP, port=0, upload_dir="uploads")
     except Exception as e:
         print(f"❌ Error al iniciar aplicación: {e}")
         input("Presiona Enter para salir...")
