@@ -109,9 +109,8 @@ Esta guía explica cómo empaquetar y ejecutar la aplicación ORMD utilizando Do
 
 1. **Clonar el Repositorio**:
    ```bash
-   git clone <URL_DE_TU_REPOSITORIO>
-   cd ormd_v2.1
-   ```
+   git clone https://github.com/YonyVilca/ormd2.1.git
+   cd ormd2.1   ```
 
 2. **Configurar Credenciales**:
    > ⚠️ **IMPORTANTE**: El archivo de credenciales `ormd-476617-56cca3f6e4a6.json` **NO** está incluido en el repositorio por seguridad.
