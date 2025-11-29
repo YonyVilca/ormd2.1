@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the current directory to allow live reloading if needed (optional)
+      # and to persist data if storage is local
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Ensure the container restarts if it crashes
+    restart: unless-stopped
